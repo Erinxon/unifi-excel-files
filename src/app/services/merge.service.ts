@@ -13,7 +13,7 @@ export class MergeService {
     const workbook = XLSX.read(data);
     const firstSheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[firstSheetName];
-    return XLSX.utils.sheet_to_json(worksheet);
+    return XLSX.utils.sheet_to_json(worksheet, { defval: null });
   }
 
   mergeFiles(destino: any[], origen: any[], relationColumn: string, mergeColumns: string[]): any[] {

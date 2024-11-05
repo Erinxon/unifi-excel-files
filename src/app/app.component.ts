@@ -53,13 +53,6 @@ export class AppComponent {
         selection.mergeColumns
       );
       this.loaderService.isLoading.set(false);
-
-      Swal.fire({
-        title: '¡Éxito!',
-        text: 'Los archivos se unificaron correctamente.',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
     } catch (error) {
       this.loaderService.isLoading.set(false);
       Swal.fire({
@@ -69,6 +62,5 @@ export class AppComponent {
         confirmButtonText: 'Intentar de nuevo'
       });
     }
-
   }
 }
