@@ -1,0 +1,25 @@
+<div class="p-6 bg-white rounded-lg shadow-lg mt-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Unificar Archivos de Excel</h2>
+    <p class="mb-6 text-gray-700">
+        Suba dos archivos de Excel (origen y destino) para unificarlos.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <label class="block font-medium mb-2 text-gray-800">Archivo Destino:</label>
+            <input type="file" (change)="onFileSelected($event, 'destino')"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        </div>
+        <div>
+            <label class="block font-medium mb-2 text-gray-800">Archivo Origen:</label>
+            <input type="file" (change)="onFileSelected($event, 'origen')"
+                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        </div>
+    </div>
+
+    <button (click)="nextStep()" class="mt-6 flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700">
+        <i class="fas fa-arrow-right"></i> Siguiente
+    </button>
+</div>

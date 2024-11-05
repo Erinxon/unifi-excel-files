@@ -1,0 +1,32 @@
+<!-- column-selector.component.html -->
+<div class="p-6 bg-white rounded-lg shadow-lg mt-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Seleccionar Columnas</h2>
+    <p class="mb-6 text-gray-700">
+        Elija la columna para relacionar los archivos y las columnas a unificar.
+    </p>
+
+    <div>
+        <label class="block font-medium mb-2 text-gray-800">Columna de Relación:</label>
+        <select [(ngModel)]="selectedRelationColumn"
+            class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+            @for (col of relationColumns; track $index) {
+                <option [value]="col">{{ col }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="mt-4">
+        <label class="block font-medium mb-2 text-gray-800">Columnas a Unificar:</label>
+        @for (col of availableColumns; track $index) {
+            <div class="flex items-center mb-2">
+                <input type="checkbox" [value]="col" (change)="onColumnSelect($event)"
+                    class="mr-2 h-5 w-5 text-green-600 checked:bg-green-500 checked:border-transparent rounded border-gray-300 focus:ring-2">
+                <label class="text-gray-800 text-lg">{{ col }}</label>
+            </div>
+        }
+    </div>
+
+    <button (click)="processFiles()" class="mt-6 flex items-center gap-2 px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600">
+        <i class="fas fa-link"></i> Unificar
+    </button>
+</div>
