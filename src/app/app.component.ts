@@ -20,6 +20,7 @@ export class AppComponent {
 
   relationColumns: string[] = [];
   availableColumns: string[] = [];
+  destinationFileName: string = '';
   resultColumns: string[] = [];
   unifiedData: any[] = [];
 
@@ -30,6 +31,8 @@ export class AppComponent {
 
   async onFilesUploaded(files: { destination: File; origin: File }): Promise<void> {
     this.loaderService.isLoading.set(true);
+
+    this.destinationFileName = files.destination?.name?.replace('xlsx', '');
     this.destinationData = await this.mergeService.readExcel(files.destination);
     this.originData = await this.mergeService.readExcel(files.origin);
 

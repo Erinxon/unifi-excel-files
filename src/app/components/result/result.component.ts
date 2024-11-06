@@ -14,6 +14,7 @@ import { LoaderService } from '../../services/loader.service';
 export class ResultComponent {
   private readonly loaderService: LoaderService = inject(LoaderService);
   
+  @Input() destinationFileName: string = '';
   @Input() resultColumns: string[] = []; 
   @Input() unifiedData: any[] = []; 
 
@@ -23,7 +24,7 @@ export class ResultComponent {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Resultados Unificados');
 
-    XLSX.writeFile(workbook, 'resultado_unificado.xlsx');
+    XLSX.writeFile(workbook, `${this.destinationFileName}-${new Date().getTime()}.xlsx`);
     this.loaderService.isLoading.set(false);
   }
 }
