@@ -16,9 +16,9 @@ export class MergeService {
     return XLSX.utils.sheet_to_json(worksheet, { defval: null });
   }
 
-  mergeFiles(destino: any[], origen: any[], relationColumn: string, mergeColumns: string[]): any[] {
-    const mergedData = destino.map(destRow => {
-      const relatedRow = origen.find(origRow => origRow[relationColumn] === destRow[relationColumn]);
+  mergeFiles(destination: any[], origin: any[], relationColumn: string, mergeColumns: string[]): any[] {
+    const mergedData = destination.map(destRow => {
+      const relatedRow = origin.find(origRow => origRow[relationColumn] === destRow[relationColumn]);
       if (relatedRow) {
         mergeColumns.forEach(col => {
           destRow[col] = relatedRow[col] || destRow[col];

@@ -9,25 +9,25 @@ import Swal from 'sweetalert2';
   styleUrl: './upload-files.component.css'
 })
 export class UploadFilesComponent {
-  fileDestino: File | null = null;
-  fileOrigen: File | null = null;
+  destinationFile: File | null = null;
+  fileOrigin: File | null = null;
 
-  @Output() filesUploaded = new EventEmitter<{ destino: File, origen: File }>();
+  @Output() filesUploaded = new EventEmitter<{ destination: File, origin: File }>();
 
   onFileSelected(event: Event, type: string): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      if (type === 'destino') {
-        this.fileDestino = input.files[0];
+      if (type === 'destination') {
+        this.destinationFile = input.files[0];
       } else {
-        this.fileOrigen = input.files[0];
+        this.fileOrigin = input.files[0];
       }
     }
   }
 
   nextStep(): void {
-    if (this.fileDestino && this.fileOrigen) {
-      this.filesUploaded.emit({ destino: this.fileDestino, origen: this.fileOrigen });
+    if (this.destinationFile && this.fileOrigin) {
+      this.filesUploaded.emit({ destination: this.destinationFile, origin: this.fileOrigin });
     } else {
       Swal.fire({
         title: '',

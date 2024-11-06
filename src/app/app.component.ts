@@ -24,18 +24,18 @@ export class AppComponent {
   resultColumns: string[] = [];
   unifiedData: any[] = [];
 
-  private destinoData: any[] = [];
-  private origenData: any[] = [];
+  private destinationData: any[] = [];
+  private originData: any[] = [];
 
   isLoading = this.loaderService.isLoading;
 
-  async onFilesUploaded(files: { destino: File; origen: File }): Promise<void> {
+  async onFilesUploaded(files: { destination: File; origin: File }): Promise<void> {
     this.loaderService.isLoading.set(true);
-    this.destinoData = await this.mergeService.readExcel(files.destino);
-    this.origenData = await this.mergeService.readExcel(files.origen);
+    this.destinationData = await this.mergeService.readExcel(files.destination);
+    this.originData = await this.mergeService.readExcel(files.origin);
 
-    this.relationColumns = Object.keys(this.destinoData[0] || {});
-    this.availableColumns = Object.keys(this.origenData[0] || {});
+    this.relationColumns = Object.keys(this.destinationData[0] || {});
+    this.availableColumns = Object.keys(this.originData[0] || {});
     this.loaderService.isLoading.set(false);
   }
 
@@ -47,8 +47,8 @@ export class AppComponent {
       );
 
       this.unifiedData = this.mergeService.mergeFiles(
-        this.destinoData,
-        this.origenData,
+        this.destinationData,
+        this.originData,
         selection.relationColumn,
         selection.mergeColumns
       );
