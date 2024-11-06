@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import Swal from 'sweetalert2';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { SweetalertService } from '../../services/sweetalert.service';
 
 @Component({
   selector: 'app-upload-files',
@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
   styleUrl: './upload-files.component.css'
 })
 export class UploadFilesComponent {
+  private readonly sweetalert: SweetalertService = inject(SweetalertService);
+  
   destinationFile: File | null = null;
   fileOrigin: File | null = null;
 
@@ -16,26 +18,36 @@ export class UploadFilesComponent {
 
   onFileSelected(event: Event, type: string): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      if (type === 'destination') {
-        this.destinationFile = input.files[0];
-      } else {
-        this.fileOrigin = input.files[0];
-      }
+
+    if(!input?.files){
+      return;
+    }
+
+    const file = input.files[0];
+
+    if(file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+      this.sweetalert.warning({
+        title: 'Archivo no válido',
+        text: 'Sólo se permiten archivos de Excel'
+      });
+      return;
+    }
+
+    if (type === 'destination') {
+      this.destinationFile = file;
+    } else {
+      this.fileOrigin = file;
     }
   }
 
   nextStep(): void {
-    if (this.destinationFile && this.fileOrigin) {
-      this.filesUploaded.emit({ destination: this.destinationFile, origin: this.fileOrigin });
-    } else {
-      Swal.fire({
-        title: '',
-        text: 'Debe seleccionar ambos archivos antes de continuar.',
-        icon: 'warning',
-        confirmButtonText: 'OK'
+    if(!this.destinationFile || !this.fileOrigin){
+      this.sweetalert.warning({
+        text: 'Debe seleccionar ambos archivos antes de continuar.'
       });
+      return;
     }
+    this.filesUploaded.emit({ destination: this.destinationFile, origin: this.fileOrigin });
   }
   
 }

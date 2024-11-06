@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { SweetalertService } from '../../services/sweetalert.service';
 
 @Component({
   selector: 'app-column-selector',
@@ -10,6 +11,8 @@ import Swal from 'sweetalert2';
   styleUrl: './column-selector.component.css'
 })
 export class ColumnSelectorComponent {
+  private readonly sweetalert: SweetalertService = inject(SweetalertService);
+
   @Input() relationColumns: string[] = []; 
   @Input() availableColumns: string[] = []; 
   @Output() columnsSelected = new EventEmitter<{ relationColumn: string, mergeColumns: string[] }>();
@@ -28,18 +31,23 @@ export class ColumnSelectorComponent {
   }
 
   processFiles(): void {
-    if (this.selectedRelationColumn && this.selectedMergeColumns.length > 0) {
-      this.columnsSelected.emit({
-        relationColumn: this.selectedRelationColumn,
-        mergeColumns: this.selectedMergeColumns,
+    if(!this.selectedRelationColumn || !this.selectedMergeColumns?.length){
+      this.sweetalert.warning({
+        text: 'Debe seleccionar una columna de relación y al menos una columna a unificar.'
       });
-    } else {
-      Swal.fire({
-        title: '',
-        text: 'Debe seleccionar una columna de relación y al menos una columna a unificar.',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-      });
+      return;
     }
+
+    if(!this.availableColumns?.find(column => column == this.selectedRelationColumn)){
+      this.sweetalert.warning({
+        text: 'Columna de relación no se encontra en las columnas del archivo origen'
+      });
+      return;
+    }
+
+    this.columnsSelected.emit({
+      relationColumn: this.selectedRelationColumn,
+      mergeColumns: this.selectedMergeColumns,
+    });
   }
 }

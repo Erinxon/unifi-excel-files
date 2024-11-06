@@ -6,7 +6,6 @@ import { ResultComponent } from './components/result/result.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoaderService } from './services/loader.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -40,27 +39,17 @@ export class AppComponent {
   }
 
   onColumnsSelected(selection: { relationColumn: string; mergeColumns: string[] }): void {
-    try {
-      this.loaderService.isLoading.set(true);
-      this.resultColumns = this.relationColumns.concat(
-        selection.mergeColumns.filter(col => !this.relationColumns.includes(col))
-      );
+    this.loaderService.isLoading.set(true);
+    this.resultColumns = this.relationColumns.concat(
+      selection.mergeColumns.filter(col => !this.relationColumns.includes(col))
+    );
 
-      this.unifiedData = this.mergeService.mergeFiles(
-        this.destinationData,
-        this.originData,
-        selection.relationColumn,
-        selection.mergeColumns
-      );
-      this.loaderService.isLoading.set(false);
-    } catch (error) {
-      this.loaderService.isLoading.set(false);
-      Swal.fire({
-        title: 'Error',
-        text: 'Hubo un problema al unificar los archivos.',
-        icon: 'error',
-        confirmButtonText: 'Intentar de nuevo'
-      });
-    }
+    this.unifiedData = this.mergeService.mergeFiles(
+      this.destinationData,
+      this.originData,
+      selection.relationColumn,
+      selection.mergeColumns
+    );
+    this.loaderService.isLoading.set(false);
   }
 }
