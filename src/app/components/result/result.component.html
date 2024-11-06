@@ -6,7 +6,13 @@
         </button>
     </div>
 
-    <div class="overflow-y-auto max-h-96 border border-gray-300 rounded-lg">
+    <div class="overflow-y-auto max-h-96 
+    [&::-webkit-scrollbar]:w-2
+    [&::-webkit-scrollbar-track]:bg-gray-100
+    [&::-webkit-scrollbar-thumb]:bg-gray-300
+    dark:[&::-webkit-scrollbar-track]:bg-gray-400
+    dark:[&::-webkit-scrollbar-thumb]:bg-green-600
+    border-gray-300 rounded-lg">
         <table class="min-w-full bg-white border border-gray-200">
             <thead>
                 <tr class="bg-green-100 sticky top-0">

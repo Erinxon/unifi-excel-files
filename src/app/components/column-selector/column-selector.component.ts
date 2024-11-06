@@ -31,6 +31,11 @@ export class ColumnSelectorComponent {
   }
 
   processFiles(): void {
+    this.columnsSelected.next({
+      relationColumn: '',
+      mergeColumns: []
+    });
+    
     if(!this.selectedRelationColumn || !this.selectedMergeColumns?.length){
       this.sweetalert.warning({
         text: 'Debe seleccionar una columna de relación y al menos una columna a unificar.'
