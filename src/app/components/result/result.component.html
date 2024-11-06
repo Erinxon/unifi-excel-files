@@ -17,8 +17,8 @@
                     }
                 </tr>
             </thead>
-            <tbody #body>
-                @defer (on viewport(body)) {
+            <tbody>
+                @defer {
                     @for (row of unifiedData; track $index) {
                         <tr [ngClass]="{'bg-gray-50': $index % 2 === 0, 'bg-white': $index % 2 !== 0}">
                             @for (col of resultColumns; track $index) {
