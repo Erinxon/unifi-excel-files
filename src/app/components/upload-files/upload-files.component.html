@@ -7,15 +7,40 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
             <label class="block font-medium mb-2 text-gray-800">Archivo destination:</label>
-            <input type="file" (change)="onFileSelected($event, 'destination')"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <div class="file-upload">
+                <label
+                    class="flex items-center justify-center w-full px-4 py-2 text-white bg-green-500 rounded-lg cursor-pointer hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    for="fileInput">
+                    Seleccionar archivo
+                </label>
+                <input
+                    id="fileInput"
+                    type="file"
+                    (change)="onFileSelected($event, 'destination')"
+                    class="hidden"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                @if (destinationFile) {
+                    <p class="mt-2 text-sm text-gray-500">Archivo seleccionado: {{ destinationFile.name }}</p>
+                }
+            </div>
         </div>
         <div>
             <label class="block font-medium mb-2 text-gray-800">Archivo origin:</label>
-            <input type="file" (change)="onFileSelected($event, 'origin')"
-                class="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+            <div class="file-upload">
+                <label class="flex items-center justify-center w-full px-4 py-2 text-white bg-green-500 rounded-lg cursor-pointer hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                     for="originFileInput">
+                    Seleccionar archivo
+                </label>
+                <input
+                    id="originFileInput"
+                    type="file"
+                    (change)="onFileSelected($event, 'origin')"
+                    class="hidden"
+                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                @if (fileOrigin) {
+                    <p class="mt-2 text-sm text-gray-500">Archivo seleccionado: {{ fileOrigin.name }}</p>
+                }
+            </div>            
         </div>
     </div>
 

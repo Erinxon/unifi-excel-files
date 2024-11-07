@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MergeService } from './services/merge.service';
 import { ColumnSelectorComponent } from './components/column-selector/column-selector.component';
 import { ResultComponent } from './components/result/result.component';
@@ -10,7 +9,7 @@ import { LoaderService } from './services/loader.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ColumnSelectorComponent, ResultComponent, UploadFilesComponent, LoadingComponent],
+  imports: [ColumnSelectorComponent, ResultComponent, UploadFilesComponent, LoadingComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
