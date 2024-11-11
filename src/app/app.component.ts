@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { MergeService } from './services/merge.service';
 import { ColumnSelectorComponent } from './components/column-selector/column-selector.component';
 import { ResultComponent } from './components/result/result.component';
@@ -28,6 +28,8 @@ export class AppComponent {
 
   isLoading = this.loaderService.isLoading;
 
+  uploadFilesComponent = viewChild(UploadFilesComponent);   
+
   async onFilesUploaded(files: { destination: File; origin: File }): Promise<void> {
     this.loaderService.isLoading.set(true);
 
@@ -54,4 +56,16 @@ export class AppComponent {
     );
     this.loaderService.isLoading.set(false);
   }
+
+  reset(){
+    this.uploadFilesComponent()?.reset();
+    this.destinationFileName = '';
+    this.destinationData = [];
+    this.originData = [];
+    this.relationColumns = [];
+    this.availableColumns = [];
+    this.unifiedData = [];
+    this.resultColumns = [];
+  }
+
 }

@@ -1,43 +1,45 @@
 <div class="p-6 bg-white rounded-lg shadow-lg mt-6">
     <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold text-gray-800">Resultado</h2>
-        <button (click)="downloadExcel()" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">
+        <button (click)="downloadExcel()"
+            class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">
             <i class="fas fa-download"></i> Descargar
         </button>
     </div>
 
     <div class="overflow-y-auto max-h-96 
-    [&::-webkit-scrollbar]:w-4
-    [&::-webkit-scrollbar-track]:bg-gray-100
-    ebkit-scrollbar-track]:rounded-lg
-    [&::-webkit-scrollbar-thumb]:bg-gray-300
-    [&::-webkit-scrollbar-thumb]:rounded-lg
-    dark:[&::-webkit-scrollbar-track]:bg-gray-400
-    dark:[&::-webkit-scrollbar-thumb]:bg-green-600
-    border-gray-300 rounded-lg">
+      [&::-webkit-scrollbar]:w-4
+      [&::-webkit-scrollbar-track]:bg-gray-100
+      ebkit-scrollbar-track]:rounded-lg
+      [&::-webkit-scrollbar-thumb]:bg-gray-300
+      [&::-webkit-scrollbar-thumb]:rounded-lg
+      dark:[&::-webkit-scrollbar-track]:bg-gray-400
+      dark:[&::-webkit-scrollbar-thumb]:bg-green-600
+      border-gray-300 rounded-lg" (scroll)="onScroll($event)">
         <table class="min-w-full bg-white border border-gray-200">
             <thead>
                 <tr class="bg-green-100 sticky top-0">
-                    @for (col of resultColumns; track $index) {
-                        <th class="px-4 py-2 border-b border-gray-300 font-semibold text-gray-800 text-left">
-                            {{ col }}
-                        </th>
+                    @for (col of resultColumns(); track $index) {
+                    <th class="px-4 py-2 border-b border-gray-300 font-semibold text-gray-800 text-left">
+                        {{ col }}
+                    </th>
                     }
                 </tr>
             </thead>
+
             <tbody>
                 @defer {
-                    @for (row of unifiedData; track $index) {
-                        <tr [ngClass]="{'bg-gray-50': $index % 2 === 0, 'bg-white': $index % 2 !== 0}">
-                            @for (col of resultColumns; track $index) {
-                                <td class="px-4 py-2 border-b border-gray-200 text-gray-700 text-left">
-                                    {{ row[col] }}
-                                </td>
-                            }
-                        </tr>
-                    }
+                @for (row of displayedData; track $index) {
+                    <tr [ngClass]="{'bg-gray-50': $index % 2 === 0, 'bg-white': $index % 2 !== 0}">
+                        @for (col of resultColumns(); track $index) {
+                        <td class="px-4 py-2 border-b border-gray-200 text-gray-700 text-left">
+                            {{ row[col] }}
+                        </td>
+                        }
+                    </tr>
+                }
                 } @placeholder {
-                    <app-loading></app-loading>
+                    <app-loading/>
                 }
             </tbody>
         </table>

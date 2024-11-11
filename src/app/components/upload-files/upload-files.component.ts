@@ -1,31 +1,39 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, computed, effect, inject, output, signal } from '@angular/core';
 import { SweetalertService } from '../../services/sweetalert.service';
-
+import {  FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-upload-files',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './upload-files.component.html',
   styleUrl: './upload-files.component.css'
 })
 export class UploadFilesComponent {
   private readonly sweetalert: SweetalertService = inject(SweetalertService);
   
-  destinationFile: File | null = null;
-  fileOrigin: File | null = null;
+  destinationFile = signal<File>(null!);
+  fileOrigin = signal<File>(null!);
 
-  @Output() filesUploaded = new EventEmitter<{ destination: File, origin: File }>();
+  filesUploaded = output<{ destination: File, origin: File }>();
 
-  onFileSelected(event: Event, type: string): void {
-    const input = event.target as HTMLInputElement;
+  processed = computed(() => this.destinationFile() !== null && this.fileOrigin() !== null);
 
-    if(!input?.files){
+  constructor(){
+    effect(() => {
+      if(this.destinationFile() !== null && this.fileOrigin() !== null){
+        this.processFiles();
+      }
+    });
+  }
+
+  onFileSelected(event: any, type: string): void {
+    const file = event.target.files[0] as File;
+
+    if(!file){
       return;
     }
 
-    const file = input.files[0];
-
-    if(file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+    if(file?.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
       this.sweetalert.warning({
         title: 'Archivo no válido',
         text: 'Sólo se permiten archivos de Excel'
@@ -34,20 +42,23 @@ export class UploadFilesComponent {
     }
 
     if (type === 'destination') {
-      this.destinationFile = file;
+      this.destinationFile.set(file);
     } else {
-      this.fileOrigin = file;
+      this.fileOrigin.set(file);
     }
+    event.target.value = '';
   }
 
-  nextStep(): void {
-    if(!this.destinationFile || !this.fileOrigin){
-      this.sweetalert.warning({
-        text: 'Debe seleccionar ambos archivos antes de continuar.'
-      });
+  processFiles(): void {
+    if(!this.destinationFile() || !this.fileOrigin()){
       return;
     }
-    this.filesUploaded.emit({ destination: this.destinationFile, origin: this.fileOrigin });
+    this.filesUploaded.emit({ destination: this.destinationFile(), origin: this.fileOrigin() });
+  }
+
+  reset(){
+    this.destinationFile.set(null!);
+    this.fileOrigin.set(null!);
   }
   
 }

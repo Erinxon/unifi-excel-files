@@ -19,8 +19,8 @@
                     (change)="onFileSelected($event, 'destination')"
                     class="hidden"
                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                @if (destinationFile) {
-                    <p class="mt-2 text-sm text-gray-500">Archivo seleccionado: {{ destinationFile.name }}</p>
+                @if (destinationFile()) {
+                    <p class="mt-2 text-sm text-gray-500">Archivo seleccionado: {{ destinationFile().name }}</p>
                 }
             </div>
         </div>
@@ -37,14 +37,17 @@
                     (change)="onFileSelected($event, 'origin')"
                     class="hidden"
                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                @if (fileOrigin) {
-                    <p class="mt-2 text-sm text-gray-500">Archivo seleccionado: {{ fileOrigin.name }}</p>
+                @if (fileOrigin()) {
+                    <p class="mt-2 text-sm text-gray-500">Archivo seleccionado: {{ fileOrigin().name }}</p>
                 }
             </div>            
         </div>
     </div>
 
-    <button (click)="nextStep()" class="mt-6 flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700">
-        <i class="fas fa-arrow-right"></i> Siguiente
-    </button>
+<!-- 
+    @if (processed()) {
+        <button (click)="reset()" class="mt-6 flex items-center gap-2 px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700">
+            <i class="fa-solid fa-rotate-left"></i> Reiniciar
+        </button>
+    } -->
 </div>

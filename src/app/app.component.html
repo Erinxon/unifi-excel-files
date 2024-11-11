@@ -5,23 +5,27 @@
 <div class="p-6 bg-gray-100 min-h-screen">
   <h1 class="text-3xl font-bold mb-6 text-center">Aplicación de Unificación de Archivos de Excel</h1>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4">
     <div class="bg-white p-6 rounded-lg shadow-lg">
-      <app-upload-files (filesUploaded)="onFilesUploaded($event)"></app-upload-files>
+      <app-upload-files (filesUploaded)="onFilesUploaded($event)" />
     </div>
-
     <div class="bg-white p-6 rounded-lg shadow-lg">
       @if (relationColumns.length && availableColumns.length) {
         <app-column-selector [relationColumns]="relationColumns" [availableColumns]="availableColumns"
-          (columnsSelected)="onColumnsSelected($event)"></app-column-selector>
+          (columnsSelected)="onColumnsSelected($event)" />
       }
     </div>
   </div>
-
-
+ 
   @if (unifiedData.length) {
-    <div class="mt-10 w-full bg-white p-2 rounded-xl shadow-lg border border-gray-200">
-      <app-result [destinationFileName]="destinationFileName" [resultColumns]="resultColumns" [unifiedData]="unifiedData"></app-result>
+    <div class="mt-10 w-full bg-white p-2 rounded-xl shadow-lg border border-gray-200 relative">
+      @if (uploadFilesComponent()?.processed()) {
+        <div class="absolute -top-2 -right-2 h-8 w-8 flex items-center justify-center bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 cursor-pointer"
+        (click)="reset()">
+          <i class="fa-solid fa-rotate-left"></i>
+        </div>
+      }
+      <app-result [destinationFileName]="destinationFileName" [resultColumns]="resultColumns" [unifiedData]="unifiedData" />
     </div>
   }
 </div>
