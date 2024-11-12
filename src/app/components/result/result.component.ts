@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, input, Input } from '@angular/core';
+import { Component, HostListener, inject, input } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { LoadingComponent } from '../loading/loading.component';
 import { NgClass } from '@angular/common';
@@ -8,8 +8,7 @@ import { LoaderService } from '../../services/loader.service';
   selector: 'app-result',
   standalone: true,
   imports: [LoadingComponent, NgClass],
-  templateUrl: './result.component.html',
-  styleUrl: './result.component.css'
+  templateUrl: './result.component.html'
 })
 export class ResultComponent {
   private readonly loaderService: LoaderService = inject(LoaderService);

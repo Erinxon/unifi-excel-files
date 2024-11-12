@@ -3,7 +3,7 @@
 }
 
 <div class="p-6 bg-gray-100 min-h-screen">
-  <h1 class="text-3xl font-bold mb-6 text-center">Aplicación de Unificación de Archivos de Excel</h1>
+  <h1 class="text-3xl font-bold mb-6 text-center">DataFill - Completa y Une Datos Faltantes en Excel</h1>
 
   <div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4">
     <div class="bg-white p-6 rounded-lg shadow-lg relative">
@@ -25,7 +25,6 @@
  
   @if (unifiedData.length) {
     <div class="mt-10 w-full bg-white p-2 rounded-xl shadow-lg border border-gray-200">
-     
       <app-result [destinationFileName]="destinationFileName" [resultColumns]="resultColumns" [unifiedData]="unifiedData" />
     </div>
   }

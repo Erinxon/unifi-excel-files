@@ -6,8 +6,7 @@ import { SweetalertService } from '../../services/sweetalert.service';
   selector: 'app-column-selector',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './column-selector.component.html',
-  styleUrl: './column-selector.component.css'
+  templateUrl: './column-selector.component.html'
 })
 export class ColumnSelectorComponent {
   private readonly sweetalert: SweetalertService = inject(SweetalertService);

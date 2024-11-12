@@ -5,8 +5,7 @@ import {  FormsModule } from '@angular/forms';
   selector: 'app-upload-files',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './upload-files.component.html',
-  styleUrl: './upload-files.component.css'
+  templateUrl: './upload-files.component.html'
 })
 export class UploadFilesComponent {
   private readonly sweetalert: SweetalertService = inject(SweetalertService);

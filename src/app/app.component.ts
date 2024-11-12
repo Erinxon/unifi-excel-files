@@ -10,8 +10,7 @@ import { LoaderService } from './services/loader.service';
   selector: 'app-root',
   standalone: true,
   imports: [ColumnSelectorComponent, ResultComponent, UploadFilesComponent, LoadingComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   private readonly mergeService: MergeService = inject(MergeService);
@@ -31,7 +30,7 @@ export class AppComponent {
   uploadFilesComponent = viewChild(UploadFilesComponent);   
 
   async onFilesUploaded(files: { destination: File; origin: File }): Promise<void> {
-    this.loaderService.isLoading.set(true);
+    this.isLoading.set(true);
 
     this.destinationFileName = files.destination?.name?.replace('xlsx', '');
     this.destinationData = await this.mergeService.readExcel(files.destination);
@@ -39,11 +38,11 @@ export class AppComponent {
 
     this.relationColumns = Object.keys(this.destinationData[0] || {});
     this.availableColumns = Object.keys(this.originData[0] || {});
-    this.loaderService.isLoading.set(false);
+    this.isLoading.set(false);
   }
 
   onColumnsSelected(selection: { relationColumn: string; mergeColumns: string[] }): void {
-    this.loaderService.isLoading.set(true);
+    this.isLoading.set(true);
     this.resultColumns = this.relationColumns.concat(
       selection.mergeColumns.filter(col => !this.relationColumns.includes(col))
     );
@@ -54,7 +53,7 @@ export class AppComponent {
       selection.relationColumn,
       selection.mergeColumns
     );
-    this.loaderService.isLoading.set(false);
+    this.isLoading.set(false);
   }
 
   reset(){
