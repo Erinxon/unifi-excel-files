@@ -15,11 +15,11 @@ export class UploadFilesComponent {
 
   filesUploaded = output<{ destination: File, origin: File }>();
 
-  processed = computed(() => this.destinationFile() !== null && this.fileOrigin() !== null);
+  uploadedFile = computed(() => this.destinationFile() !== null && this.fileOrigin() !== null);
 
   constructor(){
     effect(() => {
-      if(this.destinationFile() !== null && this.fileOrigin() !== null){
+      if(this.uploadedFile()){
         this.processFiles();
       }
     });
