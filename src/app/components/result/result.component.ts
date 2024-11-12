@@ -49,7 +49,7 @@ export class ResultComponent {
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Resultados Unificados');
 
-    XLSX.writeFile(workbook, `${this.destinationFileName}-${new Date().getTime()}.xlsx`);
+    XLSX.writeFile(workbook, `${this.destinationFileName()}-${new Date().getTime()}.xlsx`);
     this.loaderService.isLoading.set(false);
   }
 }
