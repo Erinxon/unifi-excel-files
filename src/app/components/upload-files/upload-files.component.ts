@@ -20,7 +20,7 @@ export class UploadFilesComponent {
   constructor(){
     effect(() => {
       if(this.uploadedFile()){
-        this.processFiles();
+        this.filesUploaded.emit({ destination: this.destinationFile(), origin: this.fileOrigin() });
       }
     });
   }
@@ -46,13 +46,6 @@ export class UploadFilesComponent {
       this.fileOrigin.set(file);
     }
     event.target.value = '';
-  }
-
-  processFiles(): void {
-    if(!this.destinationFile() || !this.fileOrigin()){
-      return;
-    }
-    this.filesUploaded.emit({ destination: this.destinationFile(), origin: this.fileOrigin() });
   }
 
   reset(){
